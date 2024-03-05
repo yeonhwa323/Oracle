@@ -1,0 +1,3 @@
+-- MADANG
+SELECT *
+FROM tabs;
