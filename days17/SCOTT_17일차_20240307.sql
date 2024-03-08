@@ -349,80 +349,80 @@ m = new int[size];
         [USING [IN/OUT/IN OUT] 파라미터,파라미터...]
 -- 3) 예
 -- 익명 프로시저 문법.
-
 DECLARE
-    vsql VARCHAR2(1000);
-    
-    vdeptno     emp.deptno%TYPE;
-    vempno    emp.empno%TYPE;
-    vename    emp.ename%TYPE;
-    vjob      emp.job%TYPE;
-    
+  vsql VARCHAR2(1000);
+  
+  vdeptno   emp.deptno%TYPE;
+  vempno    emp.empno%TYPE;
+  vename    emp.ename%TYPE;
+  vjob      emp.job%TYPE;
 BEGIN
-    vsql := 'SELECT deptno, empno, ename, job';
-    vsql := vsql || 'FROM emp';
-    vsql := vsql || 'WHERE empno = 7369';
+   vsql := 'SELECT deptno, empno, ename, job ';
+   vsql := vsql || 'FROM emp ';
+   vsql := vsql || 'WHERE empno = 7369 ';
+   
+   EXECUTE IMMEDIATE vsql
+           INTO vdeptno, vempno, vename, vjob;
+   DBMS_OUTPUT.PUT_LINE( vdeptno || ', ' || 
+          vempno || ', ' || vename || ', ' || vjob )     ;   
+-- EXCEPTION
+END;
 
-    EXECUTE IMMEDIATE vsql
-            INTO vdeptno, vempno, vename, vjob;
 
-    DBMS_OUTPUT.PUT_LINE (vdeptno|| ', ' || vempno || ', ' || vename|| ', ' || vjob );
---EXCEPTION
-END ;
+-- 저장 프로시저 
+CREATE OR REPLACE PROCEDURE up_ndsemp
+(
+   pempno emp.empno%TYPE
+)
+IS
+  vsql VARCHAR2(1000);
+  
+  vdeptno   emp.deptno%TYPE;
+  vempno    emp.empno%TYPE;
+  vename    emp.ename%TYPE;
+  vjob      emp.job%TYPE;
+BEGIN
+   vsql := 'SELECT deptno, empno, ename, job ';
+   vsql := vsql || 'FROM emp ';
+   -- vsql := vsql || 'WHERE empno = pempno '; X
+   vsql := vsql || 'WHERE empno = ' || pempno;  
+   
+   EXECUTE IMMEDIATE vsql
+           INTO vdeptno, vempno, vename, vjob;
+   DBMS_OUTPUT.PUT_LINE( vdeptno || ', ' || 
+          vempno || ', ' || vename || ', ' || vjob )     ;   
+-- EXCEPTION
+END;
+-- Procedure UP_NDSEMP이(가) 컴파일되었습니다.
 
 -- 저장 프로시저 2
 CREATE OR REPLACE PROCEDURE up_ndsemp
 (
-    pempno emp.empno%TYPE
+   pempno emp.empno%TYPE
 )
 IS
-    vsql VARCHAR2(1000);
-    
-    vdeptno     emp.deptno%TYPE;
-    vempno    emp.empno%TYPE;
-    vename    emp.ename%TYPE;
-    vjob      emp.job%TYPE;
-    
+  vsql VARCHAR2(1000);
+  
+  vdeptno   emp.deptno%TYPE;
+  vempno    emp.empno%TYPE;
+  vename    emp.ename%TYPE;
+  vjob      emp.job%TYPE;
 BEGIN
-    vsql := 'SELECT deptno, empno, ename, job ';
-    vsql := vsql || 'FROM emp ';
-   -- vsql := vsql || 'WHERE empno = pempno'; X
-   -- vsql := vsql || 'WHERE empno = ' || pempno;
-    vsql := vsql || 'WHERE empno = ' || pempno;
-
-    EXECUTE IMMEDIATE vsql
-            INTO vdeptno, vempno, vename, vjob
-            USING IN pempno ;
-
-    DBMS_OUTPUT.PUT_LINE (vdeptno|| ', ' || vempno || ', ' || vename|| ', ' || vjob );
---EXCEPTION
-END ;
---Procedure UP_NDSEMP이(가) 컴파일되었습니다.
-
-CREATE OR REPLACE PROCEDURE up_ndsemp
-(
-    pempno emp.empno%TYPE
-)
-IS
-    vsql VARCHAR2(1000);
-    
-    vdeptno     emp.deptno%TYPE;
-    vempno    emp.empno%TYPE;
-    vename    emp.ename%TYPE;
-    vjob      emp.job%TYPE;
-    
-BEGIN
-    vsql := 'SELECT deptno, empno, ename, job ';
-    vsql := vsql || 'FROM emp ';
-   -- vsql := vsql || 'WHERE empno = pempno'; X
-   vsql := vsql || 'WHERE empno = : pempno';
-
-    EXECUTE IMMEDIATE vsql
-            INTO vdeptno, vempno, vename, vjob;
-
-    DBMS_OUTPUT.PUT_LINE (vdeptno|| ', ' || vempno || ', ' || vename|| ', ' || vjob );
---EXCEPTION
-END ;
+   vsql := 'SELECT deptno, empno, ename, job ';
+   vsql := vsql || 'FROM emp ';
+   -- vsql := vsql || 'WHERE empno = pempno '; X
+   -- vsql := vsql || 'WHERE empno = ' || pempno;  
+   vsql := vsql || 'WHERE empno = :pempno' ;  
+   
+   DBMS_OUTPUT.PUT_LINE(vsql);
+   
+   EXECUTE IMMEDIATE vsql
+           INTO vdeptno, vempno, vename, vjob
+           USING IN pempno;
+   DBMS_OUTPUT.PUT_LINE( vdeptno || ', ' || 
+          vempno || ', ' || vename || ', ' || vjob )     ;   
+-- EXCEPTION
+END;
 
 EXEC UP_NDSEMP( 7369 );
 

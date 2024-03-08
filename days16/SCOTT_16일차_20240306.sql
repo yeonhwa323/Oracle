@@ -599,7 +599,7 @@ CREATE OR REPLACE PROCEDURE up_insertemp
 )
 IS  
     PARENT_KEY_NOT_FOUND  EXCEPTION;
-    PRAGMA EXCEPTION_INIT( PARENT_KEY_NOT_FOUND, -02291);
+    PRAGMA EXCEPTION_INIT( PARENT_KEY_NOT_FOUND, -02291); -- 컴파일이 진행되기 전에 미리처리해주는 것
 BEGIN
    INSERT INTO emp ( empno, ename, deptno )
    VALUES ( pempno, pename, pdeptno );
