@@ -165,7 +165,7 @@ DECLARE
     CURSOR edcursor IS (
             SELECT d.deptno, dname, empno, ename, sal+NVL(comm, 0) pay
             FROM dept d JOIN emp e ON d.deptno = e.deptno 
-            );
+        );
 BEGIN
     --FOR i IN [REVERSE]1..10
     FOR vderow IN edcursor
@@ -185,7 +185,7 @@ BEGIN
     FOR vderow IN (
             SELECT d.deptno, dname, empno, ename, sal+NVL(comm, 0) pay
             FROM dept d JOIN emp e ON d.deptno = e.deptno 
-            )
+    )
     LOOP
         DBMS_OUTPUT.PUT_LINE( vderow.deptno || ', ' || vderow.dname
         || ', ' || vderow.empno || ', ' || vderow.ename || ', ' || vderow.pay );              
@@ -221,7 +221,7 @@ END;
 
 -- 저장 프로시저를 실행하는 3가지 방법
 --1) EXECUTE 문으로 실행.
---2) 익명프로시저에서 호출해서 실행.
+--2) 익명프로시저에서 호출해서
 --3) 또 다른 저장프로시저에서 호출해서 실행
 
 -- 서브쿼리를 사용해서 테이블 생성
@@ -231,7 +231,7 @@ AS
 --
 SELECT *
 FROM tbl_emp ;
--- 저장(stored) 프로시저 :    up_ = userprocedure_ 의미로 생성하겠다
+-- 저장(stored) 프로시저 :    up_ = userprocedue_ 의미로 생성하겠다
 DELETE FROM tbl_emp
 WHERE empno = 9999;
 
@@ -258,7 +258,6 @@ END;
 EXECUTE UP_DELTBLEMP ; X
 EXECUTE UP_DELTBLEMP(7369);
 EXECUTE UP_DELTBLEMP(pempno=>7499) ;
-
 SELECT *
 FROM tbl_emp;
 
@@ -410,9 +409,6 @@ CREATE OR REPLACE PROCEDURE up_updtbldept
 IS
 BEGIN
     IF pdname IS NULL AND ploc IS NULL THEN
-        UPDATE tbl_dept
-       SET dname = vdname, loc = vloc
-       WHERE deptno = pdeptno;
     ELSIF pdname IS NULL THEN
        UPDATE tbl_dept
        SET loc = ploc
@@ -428,7 +424,7 @@ BEGIN
     END IF;    
     COMMIT;
 -- EXCEPTION
-END; 
+END;
 
 -- ㄷ.
 CREATE OR REPLACE PROCEDURE up_updtbldept
@@ -578,7 +574,6 @@ BEGIN
 
 --EXCEPTION
 END;
-
 DECLARE
     vname insa.name%TYPE;
     vrrn  VARCHAR2(14);

@@ -1,3 +1,4 @@
+
 -- SCOTT
 SELECT *
 FROM tabs;

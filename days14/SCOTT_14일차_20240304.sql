@@ -446,7 +446,7 @@ WHERE 상태 != '시작 전';
 	[ MAXVALUE n ? NOMAXVALUE]  최대값
 	[ MINVALUE n ? NOMINVALUE]  최소값
 	[ CYCLE ? NOCYCLE]
-	[ CACHE n ? NOCACHE];
+	[ CACHE n ? NOCACHE]; -- 값을 미리 할당할 경우 설정.
   
   예) dept 부서 테이블에 사용할 시퀀스 생성
   SELECT *
@@ -637,7 +637,7 @@ BEGIN
   WHERE deptno = 10;
   
   SELECT empno, ename, job, sal, hiredate, deptno
-   INTO vempno, vename, vjob, vsal, vhiredate, vdeptno
+        INTO vempno, vename, vjob, vsal, vhiredate, vdeptno
   FROM emp
   WHERE deptno = 10 AND sal = vmax_sal_10;
   
@@ -682,12 +682,10 @@ BEGIN
   FROM insa;
   -- WHERE num = 1001;   insa 테이블의 모든 사원 정보 이름,pay 출력
   
-  vmessage := vname || + ',  ' || vpay;
+  vmessage := vname ||  ',  ' || vpay;
   DBMS_OUTPUT.PUT_LINE(vmessage);
 --EXCEPTION
 END;
-
-
 --ORA-01422: exact fetch returns more than requested number of rows
 --ORA-06512: at line 6
 --01422. 00000 -  "exact fetch returns more than requested number of rows"
@@ -743,7 +741,7 @@ END IF;
 -- 문제) 하나의 정수를 입력받아서 홀수/짝수 라고 출력..(익명프로시저)
 DECLARE
    vnum NUMBER(4) := 0;
-   vresult VARCHAR2(4);
+   vresult VARCHAR2(6);
 BEGIN
    vnum := :bindNumber; -- 바인드변수
    IF  MOD( vnum , 2 ) = 0 THEN  -- 짝수
@@ -757,6 +755,7 @@ BEGIN
 --EXCEPTION
 END;
 
+--ORA-06502: PL/SQL: 숫자 또는 값 오류: 문자에서 숫자로의 변환 오류
 -- 3:00 수업시작~
 -- [문제] PL/SQL   IF문 연습문제...
 --  국어점수 입력받아서 수우미양가 등급 출력... ( 익명프로시저 )

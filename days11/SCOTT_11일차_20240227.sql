@@ -141,7 +141,7 @@ OR REPLACE 같은 이름의 뷰가 있을 경우 무시하고 다시 생성 == 같은 이름의 뷰 수정
 FORCE 기본 테이블의 유무에 상관없이 뷰를 생성 
 NOFORCE 기본 테이블이 있을 때만 뷰를 생성 
 ALIAS 기본 테이블의 컬럼이름과 다르게 지정한 뷰의 컬럼명 부여 
-WITH CHECK OPTION 뷰에 의해 access될 수 있는 행(row)만이 삽입, 수정 가능 
+WITH CHECK OPTION 뷰에 의해 access될 수 있는 행(row)만이 삽입, 수정 가능 // 조건컬럼값을 변경 못하게 설정하기 위한 설정.
 WITH READ ONLY DML 작업을 제한(단지 읽는 것만 가능) ==> DML로 사용거의x, SELECT만 거의사용
 
 -- 실습

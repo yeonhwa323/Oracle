@@ -212,7 +212,7 @@ ENABLE CONSTRAINT CK_TBLCONSTRAINT1_CITY; -- 제약조건 활성화
 1) PK 제약조건 삭제
 ALTER TABLE TBL_CONSTRAINT1
 DROP PRIMARY KEY;
---
+--CASCADE : 두 테이블을 연결해서 PK를 가지고 있는 쪽의 값을 삭제하면 FK로 연결된 값이 동시에 삭제되게 하는 옵션이다
 ALTER TABLE TBL_CONSTRAINT1
 DROP CONSTRAINT ' PK_tblconstraint1_empno ' ;
 CASCADE 옵션 추가 : FOREIGN KEY
@@ -681,8 +681,7 @@ FROM (
  -- (ANTI JOIN : NOT IN 구문)
  SELECT b.b_id, title, price
  FROM book b JOIN danga d ON b.b_id = d.b_id
- WHERE b.b_id NOT IN ( SELECT DISTINCT b_id    
- FROM panmai );
+ WHERE b.b_id NOT IN ( SELECT DISTINCT b_id  FROM panmai );
 
 -- minus 차집합 SET(집합) 연산자
 
@@ -719,7 +718,7 @@ select g_name, TO_CHAR(p_date, 'YYYY') p_year , sum(p_su)
 from panmai p JOIN gogaek g ON p.g_id = g.g_id
 group by g_name, TO_CHAR(p_date, 'YYYY')
 order by g_name, p_year ;
--- 서점별 구하기 : cube 사용
+-- 서점별 구하기 : cube 사용 ( 합계, 소계 보여주는 함수 )
 
 -- 문제10) 책의 총판매금액이 15000원 이상 팔린 책의 정보를 조회
 --      ( 책ID, 제목, 단가, 총판매권수, 총판매금액 )
